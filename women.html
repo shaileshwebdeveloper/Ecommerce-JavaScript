@@ -11,14 +11,30 @@
         grid-template-columns: repeat(4, 1fr);
         gap: 20px;
       }
+
+
+      @media all and (min-width:80px) and (max-width:400px) {
+
+        #container{
+        grid-template-columns: repeat(1, 1fr);
+        }
+
+      }
+
+
     </style>
   </head>
   <body>
+
+    <button><a href="cart.html">Go To Cart</a></button>
     <h1>Women Page</h1>
     <div id="container"></div>
   </body>
 </html>
 <script>
+
+  let cartData = JSON.parse(localStorage.getItem('cart')) || []
+
   let WomensData = [
     {
       image_url:
@@ -119,8 +135,24 @@
     let price = document.createElement("p");
     price.innerText = elem.price;
 
-    box.append(img, name, price);
+    let btn =  document.createElement('button')
+    btn.innerText = "Add to Cart"
+    btn.addEventListener('click', () => {
+        addToCart(elem)
+    })
+
+
+    box.append(img, name, price, btn);
 
     document.querySelector("#container").append(box);
   });
+
+
+   function addToCart(elem){
+      cartData.push(elem)
+      localStorage.setItem('cart', JSON.stringify(cartData))
+      alert('item added to cart')
+   }
+
+
 </script>
